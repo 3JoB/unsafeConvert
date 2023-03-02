@@ -14,7 +14,7 @@ func Bytes(v string) []byte {
 	return unsafe.Slice(unsafe.StringData(v), len(v))
 }
 
-func BytesSliceReflect(v string) []byte {
+func BytesReflect(v string) []byte {
 	return *(*[]byte)(unsafe.Pointer(&v))
 }
 
