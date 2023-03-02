@@ -95,14 +95,14 @@ func BenchmarkString(b *testing.B) {
 
 		name := fmt.Sprintf("String/%d", l)
 		b.Run(name, func(b *testing.B) {
-			for n := 0; n < b.N; n += 1 {
+			for n := 0; n < b.N; n++ {
 				String(arg)
 			}
 		})
 
 		name = fmt.Sprintf("string/%d", l)
 		b.Run(name, func(b *testing.B) {
-			for n := 0; n < b.N; n += 1 {
+			for n := 0; n < b.N; n++ {
 				_ = string(arg)
 			}
 		})
@@ -115,14 +115,14 @@ func BenchmarkBytes(b *testing.B) {
 
 		name := fmt.Sprintf("Bytes/%d", l)
 		b.Run(name, func(b *testing.B) {
-			for n := 0; n < b.N; n += 1 {
+			for n := 0; n < b.N; n++ {
 				Bytes(arg)
 			}
 		})
 
 		name = fmt.Sprintf("[]byte/%d", l)
 		b.Run(name, func(b *testing.B) {
-			for n := 0; n < b.N; n += 1 {
+			for n := 0; n < b.N; n++ {
 				_ = []byte(arg)
 			}
 		})
