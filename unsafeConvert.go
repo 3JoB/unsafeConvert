@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"unsafe"
 
-	"github.com/goccy/go-reflect"
+	//"github.com/goccy/go-reflect"
 )
 
 func Bytes(v string) []byte {
@@ -24,30 +24,6 @@ func String(v []byte) string {
 
 func StringReflect(v []byte) string {
 	return *(*string)(unsafe.Pointer(&v))
-}
-
-// String converts a slice of bytes into a string without performing a copy.
-// NOTE: This is an unsafe operation and may lead to problems if the bytes
-// passed as argument are changed while the string is used.  No checking whether
-// bytes are valid UTF-8 data is performed.
-func StringBasic(bytes []byte) string {
-	hdr := *(*reflect.SliceHeader)(unsafe.Pointer(&bytes))
-	return *(*string)(unsafe.Pointer(&reflect.StringHeader{
-		Data: hdr.Data,
-		Len:  hdr.Len,
-	}))
-}
-
-// Bytes converts a string into a slice of bytes without performing a copy.
-// NOTE: This is an unsafe operation and may lead to problems if the bytes are
-// changed.
-func BytesBasic(str string) []byte {
-	hdr := *(*reflect.StringHeader)(unsafe.Pointer(&str))
-	return *(*[]byte)(unsafe.Pointer(&reflect.SliceHeader{
-		Data: hdr.Data,
-		Len:  hdr.Len,
-		Cap:  hdr.Len,
-	}))
 }
 
 func IntToString(v int) string {
