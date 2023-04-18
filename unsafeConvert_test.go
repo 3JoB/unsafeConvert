@@ -42,7 +42,7 @@ type Bs string
 
 func TestTsT(t *testing.T) {
 	var r Bs = "src"
-	t.Error(AutoReflect(r))
+	t.Error(STBReflect(r))
 	t.Error("ok")
 }
 
