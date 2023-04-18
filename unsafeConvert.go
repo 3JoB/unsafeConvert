@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"unsafe"
 
-	//"github.com/goccy/go-reflect"
+	// "github.com/goccy/go-reflect"
 )
 
 func Bytes(v string) []byte {
@@ -23,6 +23,29 @@ func String(v []byte) string {
 }
 
 func StringReflect(v []byte) string {
+	return *(*string)(unsafe.Pointer(&v))
+}
+
+// Note that this method is extremely dangerous,
+// please do not use this method unless absolutely necessary!
+//
+// Before generics were used, this method could cause memory
+// usage exceptions, leading to system unresponsiveness
+// (no matter how much memory is installed).
+// This problem has been fixed by adding generics,
+// but there is no guarantee that memory exceptions will not
+// continue to occur in the future.
+//
+// ----------------------------------------------------------------
+//
+// This method is used to convert any type to a string type.
+// However, please note that not all types can be converted.
+//
+// Abusing this method can lead to program crashes or even
+// system crashes. So before converting, please test in a virtual
+// environment whether the type you want to convert can be converted,
+// in order to avoid loss.
+func STBReflect[T ~string | ~[]byte](v T) string {
 	return *(*string)(unsafe.Pointer(&v))
 }
 

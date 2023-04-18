@@ -38,6 +38,14 @@ func repeat(ch byte, l int) string {
 	return string(data)
 }
 
+type Bs string
+
+func TestTsT(t *testing.T) {
+	var r Bs = "src"
+	t.Error(AutoReflect(r))
+	t.Error("ok")
+}
+
 func TestString(t *testing.T) {
 	for _, want := range strings {
 		arg := []byte(want)
