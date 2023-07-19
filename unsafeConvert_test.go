@@ -42,14 +42,14 @@ type Bs string
 
 func TestTsT(t *testing.T) {
 	var r Bs = "src"
-	t.Error(STBReflect(r))
+	t.Error(STBPointer(r))
 	t.Error("ok")
 }
 
 func TestString(t *testing.T) {
 	for _, want := range strings {
 		arg := []byte(want)
-		got := String(arg)
+		got := StringSlice(arg)
 		if got != want {
 			t.Errorf("String(%q) = %q but want %q",
 				arg, got, want)
@@ -71,7 +71,18 @@ func eq(a, b []byte) bool {
 func TestBytes(t *testing.T) {
 	for _, arg := range strings {
 		want := []byte(arg)
-		got := Bytes(arg)
+		got := ByteSlice(arg)
+		if !eq(got, want) {
+			t.Errorf("Bytes(%q) = %q but want %q",
+				arg, got, want)
+		}
+	}
+}
+
+func TestPoolBytes(t *testing.T) {
+	for _, arg := range strings {
+		want := []byte(arg)
+		got := ByteCopy(arg)
 		if !eq(got, want) {
 			t.Errorf("Bytes(%q) = %q but want %q",
 				arg, got, want)
@@ -80,7 +91,7 @@ func TestBytes(t *testing.T) {
 }
 
 func TestNil(t *testing.T) {
-	got := String(nil)
+	got := StringSlice(nil)
 	if got != "" {
 		t.Errorf("String(nil) = %q but want %q", got, "")
 	}
@@ -104,7 +115,7 @@ func BenchmarkString(b *testing.B) {
 		name := fmt.Sprintf("String/%d", l)
 		b.Run(name, func(b *testing.B) {
 			for n := 0; n < b.N; n++ {
-				String(arg)
+				StringSlice(arg)
 			}
 		})
 
@@ -124,7 +135,7 @@ func BenchmarkBytes(b *testing.B) {
 		name := fmt.Sprintf("Bytes/%d", l)
 		b.Run(name, func(b *testing.B) {
 			for n := 0; n < b.N; n++ {
-				Bytes(arg)
+				ByteSlice(arg)
 			}
 		})
 

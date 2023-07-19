@@ -8,19 +8,25 @@ import (
 	"unsafe"
 )
 
-func Bytes(v string) []byte {
+func ByteSlice(v string) []byte {
 	return unsafe.Slice(unsafe.StringData(v), len(v))
 }
 
-func BytesReflect(v string) []byte {
+func BytePointer(v string) []byte {
 	return *(*[]byte)(unsafe.Pointer(&v))
 }
 
-func String(v []byte) string {
+func ByteCopy(s string) []byte {
+	buf := make([]byte, len(s))
+	copy(buf, s)
+	return buf
+}
+
+func StringSlice(v []byte) string {
 	return unsafe.String(unsafe.SliceData(v), len(v))
 }
 
-func StringReflect(v []byte) string {
+func StringPointer(v []byte) string {
 	return *(*string)(unsafe.Pointer(&v))
 }
 
@@ -43,7 +49,7 @@ func StringReflect(v []byte) string {
 // system crashes. So before converting, please test in a virtual
 // environment whether the type you want to convert can be converted,
 // in order to avoid loss.
-func STBReflect[T ~string | ~[]byte](v T) string {
+func STBPointer[T ~string | ~[]byte](v T) string {
 	return *(*string)(unsafe.Pointer(&v))
 }
 

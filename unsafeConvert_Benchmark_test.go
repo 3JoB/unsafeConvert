@@ -233,7 +233,7 @@ The official mailing list for discussion of the Go language is Go Nuts.
 
 Report bugs using the Go issue tracker.`
 
-func Benchmark_StringToBytes_Lite(b *testing.B) {
+func Benchmark_ByteToString_G_Lite(b *testing.B) {
 	b.ResetTimer()
 	v := "Break a leg"
 	for i := 0; i < b.N; i++ {
@@ -241,39 +241,102 @@ func Benchmark_StringToBytes_Lite(b *testing.B) {
 	}
 }
 
-func Benchmark_StringToBytes_usC_Lite(b *testing.B) {
+func Benchmark_ByteToString_Copy_U_Lite(b *testing.B) {
 	b.ResetTimer()
 	v := "Break a leg"
 	for i := 0; i < b.N; i++ {
-		_ = unsafeConvert.Bytes(v)
+		_ = unsafeConvert.ByteCopy(v)
 	}
 }
 
-func Benchmark_StringToBytes_usC_Reflect_Lite(b *testing.B) {
+func Benchmark_ByteToString_Slice_U_Lite(b *testing.B) {
 	b.ResetTimer()
 	v := "Break a leg"
 	for i := 0; i < b.N; i++ {
-		_ = unsafeConvert.BytesReflect(v)
+		_ = unsafeConvert.ByteSlice(v)
 	}
 }
 
-func Benchmark_StringToBytes_Big(b *testing.B) {
+func Benchmark_ByteToString_Pointer_U_Lite(b *testing.B) {
+	b.ResetTimer()
+	v := "Break a leg"
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.BytePointer(v)
+	}
+}
+
+func Benchmark_ByteToString_G_Big(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = []byte(biG)
 	}
 }
 
-func Benchmark_StringToBytes_usC_Big(b *testing.B) {
+func Benchmark_ByteToString_Copy_U_Big(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = unsafeConvert.Bytes(biG)
+		_ = unsafeConvert.ByteCopy(biG)
 	}
 }
 
-func Benchmark_StringToBytes_usC_Reflect_Big(b *testing.B) {
+func Benchmark_ByteToString_Slice_U_Big(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = unsafeConvert.BytesReflect(biG)
+		_ = unsafeConvert.ByteSlice(biG)
+	}
+}
+
+func Benchmark_BytesToString_U_Pointer_Big(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.BytePointer(biG)
+	}
+}
+
+// 
+
+func Benchmark_StringToByte_G_Lite(b *testing.B) {
+	b.ResetTimer()
+	v := []byte("Break a leg")
+	for i := 0; i < b.N; i++ {
+		_ = string(v)
+	}
+}
+
+func Benchmark_StringToByte_Slice_U_Lite(b *testing.B) {
+	b.ResetTimer()
+	v := []byte("Break a leg")
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.StringSlice(v)
+	}
+}
+
+
+func Benchmark_StringToByte_Pointer_U_Lite(b *testing.B) {
+	b.ResetTimer()
+	v := []byte("Break a leg")
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.StringPointer(v)
+	}
+}
+
+func Benchmark_StringToByte_G_Big(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = []byte(biG)
+	}
+}
+
+func Benchmark_StringToByte_Slice_U_Big(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.ByteSlice(biG)
+	}
+}
+
+func Benchmark_StringToBytes_U_Pointer_Big(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.BytePointer(biG)
 	}
 }
