@@ -4,7 +4,9 @@
 package unsafeConvert
 
 import (
+	"bytes"
 	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -14,6 +16,13 @@ func ByteSlice(v string) []byte {
 
 func BytePointer(v string) []byte {
 	return *(*[]byte)(unsafe.Pointer(&v))
+}
+
+func ByteBytes(v string) []byte {
+	var i bytes.Buffer
+	i.WriteString(v)
+	defer i.Reset()
+	return i.Bytes()
 }
 
 func ByteCopy(s string) []byte {
@@ -28,6 +37,13 @@ func StringSlice(v []byte) string {
 
 func StringPointer(v []byte) string {
 	return *(*string)(unsafe.Pointer(&v))
+}
+
+func StringStrings(v []byte) string {
+	var i strings.Builder
+	i.Write(v)
+	defer i.Reset()
+	return i.String()
 }
 
 // Note that this method is extremely dangerous,

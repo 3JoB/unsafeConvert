@@ -20,7 +20,7 @@ import (
 	"testing"
 )
 
-var strings = []string{
+var strs = []string{
 	repeat(' ', 0),
 	repeat(' ', 1),
 	"foo",
@@ -47,7 +47,7 @@ func TestTsT(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
-	for _, want := range strings {
+	for _, want := range strs {
 		arg := []byte(want)
 		got := StringSlice(arg)
 		if got != want {
@@ -69,7 +69,7 @@ func eq(a, b []byte) bool {
 }
 
 func TestBytes(t *testing.T) {
-	for _, arg := range strings {
+	for _, arg := range strs {
 		want := []byte(arg)
 		got := ByteSlice(arg)
 		if !eq(got, want) {
@@ -80,7 +80,7 @@ func TestBytes(t *testing.T) {
 }
 
 func TestPoolBytes(t *testing.T) {
-	for _, arg := range strings {
+	for _, arg := range strs {
 		want := []byte(arg)
 		got := ByteCopy(arg)
 		if !eq(got, want) {
