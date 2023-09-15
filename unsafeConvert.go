@@ -5,6 +5,7 @@ package unsafeConvert
 
 import (
 	"bytes"
+	"errors"
 	"strings"
 	"unsafe"
 )
@@ -69,29 +70,68 @@ func STBPointer[T ~string | ~[]byte](v T) string {
 }
 
 func Itoa(i int) string {
+	var b [20]byte
+	bp := len(b) - 1
 
-    var b [20]byte
-    bp := len(b) - 1
+	var sign bool
+	if i < 0 {
+		sign = true
+		i = -i
+	}
 
-    var sign bool
-    if i < 0 {
-        sign = true
-        i = -i
-    }
+	for i >= 10 {
+		q := i / 10
+		b[bp] = byte('0' + i - q*10)
+		bp--
+		i = q
+	}
 
-    for i >= 10 {
-        q := i / 10
-        b[bp] = byte('0' + i - q*10)
-        bp--
-        i = q
-    }
+	b[bp] = byte('0' + i)
+	if sign {
+		bp--
+		b[bp] = '-'
+	}
 
-    b[bp] = byte('0' + i)
+	return string(b[bp:])
+}
 
-    if sign {
-        bp--
-        b[bp] = '-'
-    }
+func Atoi(s string) (int, error) {
+	if len(s) == 0 {
+		return 0, errors.New("empty string")
+	}
 
-    return string(b[bp:])
+	var neg bool
+	if s[0] == '-' {
+		neg = true
+		s = s[1:]
+	} else if s[0] == '+' {
+		s = s[1:]
+	}
+
+	const maxUint = 1<<32 - 1
+
+	var n uint64
+	for _, ch := range s {
+		if ch < '0' || ch > '9' {
+			continue
+		}
+		digit := uint64(ch - '0')
+		if n > maxUint/10 || (n == maxUint/10 && digit > maxUint%10) {
+			// overflow
+			return 0, errors.New("overflow")
+		}
+		n = n*10 + digit
+	}
+
+	if neg {
+		if n > maxUint+1 {
+			return 0, errors.New("underflow")
+		}
+		return -int(n), nil
+	} else {
+		if n > maxUint {
+			return 0, errors.New("overflow")
+		}
+		return int(n), nil
+	}
 }

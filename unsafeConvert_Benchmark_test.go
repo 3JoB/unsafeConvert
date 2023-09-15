@@ -396,10 +396,26 @@ func Benchmark_IOTA_U(b *testing.B) {
 	}
 }
 
-func Benchmark_IOTA_G(b *testing.B) {
+func Benchmark_Iota_G(b *testing.B) {
 	g := 12345
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = unsafeConvert.IntToString(g)
+	}
+}
+
+func Benchmark_Atoi_U(b *testing.B) {
+	g := "1256231 Biefob 45b(%^$^@%!)"
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = unsafeConvert.Atoi(g)
+	}
+}
+
+func Benchmark_Atoi_G(b *testing.B) {
+	g := "1256231"
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.StringToInt(g)
 	}
 }
