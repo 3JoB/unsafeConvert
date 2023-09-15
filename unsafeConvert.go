@@ -5,7 +5,6 @@ package unsafeConvert
 
 import (
 	"bytes"
-	"strconv"
 	"strings"
 	"unsafe"
 )
@@ -69,20 +68,30 @@ func STBPointer[T ~string | ~[]byte](v T) string {
 	return *(*string)(unsafe.Pointer(&v))
 }
 
-func IntToString(v int) string {
-	return strconv.Itoa(v)
-}
+func Itoa(i int) string {
 
-func Int64ToString(v int64) string {
-	return strconv.FormatInt(v, 10)
-}
+    var b [20]byte
+    bp := len(b) - 1
 
-func StringToInt64(v string) int64 {
-	i, _ := strconv.ParseInt(v, 10, 64)
-	return i
-}
+    var sign bool
+    if i < 0 {
+        sign = true
+        i = -i
+    }
 
-func StringToInt(v string) int {
-	i, _ := strconv.Atoi(v)
-	return i
+    for i >= 10 {
+        q := i / 10
+        b[bp] = byte('0' + i - q*10)
+        bp--
+        i = q
+    }
+
+    b[bp] = byte('0' + i)
+
+    if sign {
+        bp--
+        b[bp] = '-'
+    }
+
+    return string(b[bp:])
 }

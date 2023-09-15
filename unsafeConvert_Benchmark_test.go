@@ -1,6 +1,7 @@
 package unsafeConvert_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/3JoB/unsafeConvert"
@@ -233,7 +234,10 @@ The official mailing list for discussion of the Go language is Go Nuts.
 
 Report bugs using the Go issue tracker.`
 
-var bBig = []byte(biG)
+var (
+	bBig = []byte(biG)
+	fData float32 = 0.8276842
+)
 
 func Benchmark_StringToByte_G_Lite(b *testing.B) {
 	b.ResetTimer()
@@ -367,5 +371,35 @@ func Benchmark_ByteToString_U_Strings_Big(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = unsafeConvert.StringStrings(bBig)
+	}
+}
+
+func Benchmark_Float32_U(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.Float32(fData)
+	}
+}
+
+func Benchmark_Float32_FMT(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = fmt.Sprintf("%f", fData)
+	}
+}
+
+func Benchmark_IOTA_U(b *testing.B) {
+	g := 12345
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.Itoa(g)
+	}
+}
+
+func Benchmark_IOTA_G(b *testing.B) {
+	g := 12345
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.IntToString(g)
 	}
 }
