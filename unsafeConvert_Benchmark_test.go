@@ -388,7 +388,7 @@ func Benchmark_Float32_FMT(b *testing.B) {
 	}
 }
 
-func Benchmark_IOTA_U(b *testing.B) {
+func Benchmark_Itoa_U(b *testing.B) {
 	g := 12345
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -396,7 +396,7 @@ func Benchmark_IOTA_U(b *testing.B) {
 	}
 }
 
-func Benchmark_Iota_G(b *testing.B) {
+func Benchmark_Itoa_G(b *testing.B) {
 	g := 12345
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

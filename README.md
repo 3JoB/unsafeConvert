@@ -32,8 +32,8 @@ Benchmark_ByteToString_U_Pointer_Big-20     	1000000000	         0.1100 ns/op	  
 Benchmark_ByteToString_U_Strings_Big-20     	 1000000	      1126 ns/op	   10880 B/op	       1 allocs/op
 Benchmark_Float32_U-20                      	18850288	        58.05 ns/op	      40 B/op	       2 allocs/op
 Benchmark_Float32_FMT-20                    	11351810	       114.2 ns/op	      16 B/op	       2 allocs/op
-Benchmark_IOTA_U-20                         	186808952	         6.235 ns/op	       0 B/op	       0 allocs/op
-Benchmark_Iota_G-20                         	88849399	        13.01 ns/op	       5 B/op	       1 allocs/op
+Benchmark_Itoa_U-20                         	186808952	         6.235 ns/op	       0 B/op	       0 allocs/op
+Benchmark_Itoa_G-20                         	88849399	        13.01 ns/op	       5 B/op	       1 allocs/op
 Benchmark_Atoi_U-20                         	135130189	         8.779 ns/op	       0 B/op	       0 allocs/op
 Benchmark_Atoi_G-20                         	342945426	         3.713 ns/op	       0 B/op	       0 allocs/op
 ```
