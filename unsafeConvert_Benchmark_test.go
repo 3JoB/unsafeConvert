@@ -405,7 +405,7 @@ func Benchmark_Iota_G(b *testing.B) {
 }
 
 func Benchmark_Atoi_U(b *testing.B) {
-	g := "1256231 Biefob 45b(%^$^@%!)"
+	g := "1256231"
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = unsafeConvert.Atoi(g)

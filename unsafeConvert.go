@@ -65,7 +65,7 @@ func StringStrings(v []byte) string {
 // system crashes. So before converting, please test in a virtual
 // environment whether the type you want to convert can be converted,
 // in order to avoid loss.
-func STBPointer[T ~string | ~[]byte](v T) string {
+func AnyString[T ~string | ~[]byte](v T) string {
 	return *(*string)(unsafe.Pointer(&v))
 }
 
