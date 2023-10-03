@@ -128,10 +128,62 @@ func Atoi(s string) (int, error) {
 			return 0, errors.New("underflow")
 		}
 		return -int(n), nil
-	} else {
-		if n > maxUint {
-			return 0, errors.New("overflow")
-		}
-		return int(n), nil
 	}
+	if n > maxUint {
+		return 0, errors.New("overflow")
+	}
+	return int(n), nil
+}
+
+func ItoaFormat(i int, f string) string {
+	var b [24]byte
+
+	width := 0
+	for _, ch := range f {
+		if ch >= '0' && ch <= '9' {
+			width = width*10 + int(ch) - '0'
+		}
+	}
+
+	base := 16
+	if strings.ContainsAny(f, "bB") {
+		base = 2
+	} else if strings.ContainsAny(f, "oO") {
+		base = 8
+	}
+
+	bp := len(b) - 1
+	isNeg := false
+	if i < 0 {
+		isNeg = true
+		i = -i
+	}
+
+	for i > 0 {
+		digit := i % base
+		if digit < 10 {
+			b[bp] = byte('0' + digit)
+		} else {
+			b[bp] = byte('a' + digit - 10)
+		}
+		bp--
+		i /= base
+	}
+
+	var fillByte byte = ' '
+	if strings.IndexByte(f, '0') != -1 {
+		fillByte = '0'
+	}
+
+	for bp > len(b)-width {
+		b[bp] = fillByte
+		bp--
+	}
+
+	if isNeg {
+		bp--
+		b[bp] = '-'
+	}
+
+	return string(b[bp:])
 }

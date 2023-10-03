@@ -235,7 +235,7 @@ The official mailing list for discussion of the Go language is Go Nuts.
 Report bugs using the Go issue tracker.`
 
 var (
-	bBig = []byte(biG)
+	bBig          = []byte(biG)
 	fData float32 = 0.8276842
 )
 
@@ -417,5 +417,53 @@ func Benchmark_Atoi_G(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = unsafeConvert.StringToInt(g)
+	}
+}
+
+func Benchmark_I64_G(b *testing.B) {
+	g := 1256231
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = int64(g)
+	}
+}
+
+func Benchmark_I64_U1(b *testing.B) {
+	g := 1256231
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.IntTo64(g)
+	}
+}
+
+func Benchmark_I64_U2(b *testing.B) {
+	g := 1256231
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.It64(g)
+	}
+}
+
+func Benchmark_UI32_G(b *testing.B) {
+	var g uint32 = 1256231423
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = uint32(g)
+	}
+}
+
+func Benchmark_UI32_G2(b *testing.B) {
+	var g uint32 = 1256231423
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = fmt.Sprint(g)
+	}
+}
+
+func Benchmark_UI32_U(b *testing.B) {
+	var g uint32 = 1256231423
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = unsafeConvert.Uint32ToString(g)
 	}
 }
